@@ -1,8 +1,8 @@
 import os
-from pathlib import Path
 from tkinter import *
 from tkinter import filedialog
 import downloaderBE as be
+from time import sleep
 
 inp = ""
 filepath = ""
@@ -14,25 +14,27 @@ def checkForDownload():
     inp = urlTextBox.get()
     canDownload = be.isDownloadable(inp)
     if (canDownload):
-        displaytext = "Starting Download"
-        be.startDownload(filepath)
+        msgLabel = Label(root,text = "Download Starting...!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
+        msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
+        root.update()
+        startDownLoad()
     else:
-        displaytext = "Unable to download. Please check the URL/Source, and try again!"
-        flag = 1
-
-    if msgLabel.winfo_exists:
-        msgLabel.destroy
-    msgLabel = Label(root,text = displaytext, font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
-    msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
+        msgLabel = Label(root,text = "Unable to download. Please check the URL/Source, and try again!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
+        msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
     root.after(3000, msgLabel.destroy)
+
+    
 
 def startDownLoad():
     global urlTextBox
     if canDownload:
+        downloadLabel = Label(root,text = "Download In Progress...", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
+        downloadLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
+        root.update()
         be.startDownload(filepath)
         urlTextBox.delete(0,'end')
-        msgLabel = Label(root,text = "Download Completed!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
-        msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
+        downloadLabel = Label(root,text = "Download Completed!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
+        downloadLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
     else:
         checkForDownload()
 
