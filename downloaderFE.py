@@ -10,18 +10,19 @@ canDownload = False
 
 def checkForDownload():
     global inp, canDownload
-    msgLabel = Label(root)
     inp = urlTextBox.get()
+    msgLabel = Label(root,text = "Checking if downloadable", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
+    msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
+    root.update()
     canDownload = be.isDownloadable(inp)
+    msgLabel.destroy()
     if (canDownload):
-        msgLabel = Label(root,text = "Download Starting...!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
-        msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
         root.update()
         startDownLoad()
     else:
         msgLabel = Label(root,text = "Unable to download. Please check the URL/Source, and try again!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
         msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
-    root.after(3000, msgLabel.destroy)
+        root.after(3000, msgLabel.destroy)
 
     
 
@@ -33,6 +34,7 @@ def startDownLoad():
         root.update()
         be.startDownload(filepath)
         urlTextBox.delete(0,'end')
+        downloadLabel.destroy()
         downloadLabel = Label(root,text = "Download Completed!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
         downloadLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
     else:
@@ -46,7 +48,7 @@ def changeDirectory():
 
 
 root = Tk()
-root.geometry('1100x500')
+root.geometry('1000x500')
 root.resizable(0,0)
 root.title("File Downloader")
 root.config(bg="#4f3d40")
