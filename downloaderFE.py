@@ -2,7 +2,6 @@ import os
 from tkinter import *
 from tkinter import filedialog
 import downloaderBE as be
-from time import sleep
 
 inp = ""
 filepath = ""
@@ -13,6 +12,7 @@ canDownload = False
 #Invoked when Go button is pressed.
 def checkForDownload():
     global inp, canDownload
+    deleteLastLabel()
     inp = urlTextBox.get()
     msgLabel = Label(root,text = "Checking if downloadable", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
     msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
@@ -20,18 +20,17 @@ def checkForDownload():
     canDownload = be.isDownloadable(inp)
     msgLabel.destroy()
     if (canDownload):
-        root.update()
         startDownLoad()
     else:
         msgLabel = Label(root,text = "Unable to download. Please check the URL/Source, and try again!", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
         msgLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
-        root.after(3000, msgLabel.destroy)
 
 #This method sends the directory path to downloadeFile method in downloaderBE 
 #Since it can be directly invoked by download button, thus it checks first if it is
 # downloadable file or not and thus displays the message of download being in progress or completed.
 def startDownLoad():
     global urlTextBox
+    deleteLastLabel()
     if canDownload:
         downloadLabel = Label(root,text = "Download In Progress...", font ='arial 15 bold', pady=20, bg="#4f3d40", foreground="#fff")
         downloadLabel.pack(padx= 150, pady=(5,0), side= TOP, anchor="w")
@@ -44,13 +43,21 @@ def startDownLoad():
     else:
         checkForDownload()
 
+#This method deleted the last download status when Download/Go button is clicked again.
+def deleteLastLabel():
+    for label in root.winfo_children():
+        if type(label) == Label :
+            text = label["text"] 
+            if text == "Download Completed!" or "Unable to download" in text:
+                label.destroy()
+
 #This method helps the user to choose a new directory when Chage directory button is clicked.
 def changeDirectory():
     global textEntry, filepath
     textEntry.set(filedialog.askdirectory())
     filepath = textEntry.get()
 
-
+#MAIN BODY
 root = Tk()
 root.geometry('1000x500')
 root.resizable(0,0)
