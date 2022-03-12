@@ -1,10 +1,9 @@
 ### What is this repository for? ###
 
-* Quick summary : - This is a Python based File Downloader Project that analyses the provided URL for downloadability 
-                    and downloads the file if downloadable
-                  - If not, then it displays a message to check the URL/Source and try again
-                  - The file is downloaded in the Downloads directory of the User's system, however user can
-                    change the directory as per wish.
+* Quick summary : 
+* - This is a Python based File Downloader Project that analyses the provided URL for downloadability and downloads the file if downloadable
+* - If not, then it displays a message to check the URL/Source and try again
+* - The file is downloaded in the Downloads directory of the User's system, however user can change the directory as per wish.
 
 * Version :  1.0
 
@@ -18,8 +17,8 @@
 
 ### About the Python Scripts ###
 The project comprises of two Python files: 
-downloaderFE.py : The Frontend Logic for the Application has been sripted in this file using the tkinter library provided by python.
-downloaderBE.py: The Backend Logic for the downloading a file has been sripted in this file using the requests library provided by python.
+- downloaderFE.py : The Frontend Logic for the Application has been sripted in this file using the tkinter library provided by python.
+- downloaderBE.py: The Backend Logic for the downloading a file has been sripted in this file using the requests library provided by python.
 
 ### Have Suggestions for me? ###
 Hi there! I am a learner and trying to improve this code every day. I am looking for your honest opinions. Please write me over on to the 
