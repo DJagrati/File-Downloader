@@ -1,21 +1,21 @@
 import os
 import requests
 from requests.exceptions import MissingSchema
-from threading import Thread
 
-filename = ""  # be careful with file names
+filename = "" 
 def isDownloadable(url: str):
     global response, filename
     response = getResponse(url)
     if not(response == None):
-        if response.ok:
-            filename = url.split('/')[-1].replace(" ", "_")  # be careful with file names
+        if response.ok:   #For 2xx status code
+            filename = url.split('/')[-1].replace(" ", "_")  
             return True
-        else:  # HTTP status code 4XX/5XX
+        else:   #For non-2xx status codes (4xx or 5xx)
             return False
     else: 
         return False
 
+#An handled method to get the response based on different type of URLs provided.
 def getResponse(url):
     try:
         return requests.get(url)
@@ -24,16 +24,10 @@ def getResponse(url):
 
 
 def downloadFile(dest_folder: str):
-    file_path = os.path.join(dest_folder, filename)
+    file_path = os.path.join(dest_folder, filename)  #Path where file will download.
     with open(file_path, 'wb') as f:
-        for chunk in response.iter_content(chunk_size=1024 * 8):
+        for chunk in response.iter_content(chunk_size=1024 * 8):  #Iterating on response in chunks and writing it in the filepath(in short downloading it)
             if chunk:
                 f.write(chunk)
                 f.flush()
                 os.fsync(f.fileno())
-
-def startDownload(destFolder):
-    Thread(target=downloadFile(destFolder)).start
-    
-
-# download("https://docs.python.org/3/archives/python-3.10.2-docs-pdf-letter.zip", dest_folder="D:\Jagrati's Personal\Downloader")
