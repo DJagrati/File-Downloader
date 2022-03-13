@@ -2,7 +2,7 @@ import os
 import requests
 from requests.exceptions import MissingSchema
 
-filename = "" 
+#Checks if the given URL is correct / not.
 def isDownloadable(url: str):
     global response, filename
     response = getResponse(url)
